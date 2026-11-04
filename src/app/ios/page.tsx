@@ -77,27 +77,37 @@ export default function IosInstallPage() {
                 1
               </div>
               <div className="flex-1 space-y-1">
-                <h3 className="text-sm sm:text-base font-bold text-[#fff8f2]">
-                  Install Anti-Revoke Protection
-                </h3>
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="text-sm sm:text-base font-bold text-[#fff8f2]">
+                    Install Verified Anti-Revoke Profile
+                  </h3>
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[10px] font-bold text-emerald-400">
+                    Verified ✅
+                  </span>
+                </div>
                 <p className="text-xs text-[#a6ada6] leading-relaxed">
-                  Blocks Apple from revoking the enterprise certificate. Tap download, then open{' '}
-                  <strong className="text-[#fff8f2]">Settings → Profile Downloaded → Install</strong>.
+                  Cryptographically blocks Apple from revoking the enterprise certificate. Displays a green{' '}
+                  <strong className="text-emerald-400">Verified ✅</strong> checkmark in iOS Settings.
                 </p>
 
-                <div className="pt-3">
+                <div className="pt-3 flex flex-wrap gap-2.5">
                   <a
                     href="https://musicly-4l0y.onrender.com/ios/antirevoke.mobileconfig"
                     download="Tone-AntiRevoke.mobileconfig"
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#1c241e] hover:bg-white/10 border border-[#b9cbba]/30 text-xs font-semibold text-[#b9cbba] hover:text-[#fff8f2] transition-colors"
                   >
                     <Download className="w-3.5 h-3.5" />
-                    <span>Download DNS Profile</span>
+                    <span>Download Verified Profile</span>
                   </a>
                 </div>
 
-                <div className="mt-3 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-200/90 leading-relaxed">
-                  <strong>💡 First-Time / Retry Tip:</strong> If you previously had an installation error, delete any greyed-out Tone icon from your home screen, then toggle <strong>Airplane Mode ON for 5 seconds and OFF</strong> to flush iOS's cached revocation error.
+                <div className="mt-3 p-3.5 rounded-xl bg-black/40 border border-white/5 space-y-1.5 text-[11px] text-[#a6ada6] leading-relaxed">
+                  <div className="font-semibold text-[#fff8f2] flex items-center gap-1.5">
+                    <span>Quick 1-Minute Setup Instructions:</span>
+                  </div>
+                  <div>1. Tap <strong>Download Verified Profile</strong> above ➔ tap <strong>Allow</strong>.</div>
+                  <div>2. Open <strong>Settings ➔ Profile Downloaded ➔ Install</strong> (confirm it says <strong className="text-emerald-400">Verified ✅</strong>).</div>
+                  <div>3. <em>(Crucial if retrying)</em>: If you previously saw an installation error, delete any greyed-out Tone icon, then toggle <strong>Airplane Mode ON for 10 seconds and OFF</strong> to flush iOS's cached error.</div>
                 </div>
               </div>
             </div>
@@ -115,7 +125,7 @@ export default function IosInstallPage() {
                 </h3>
                 <p className="text-xs text-[#a6ada6] leading-relaxed">
                   Triggers Apple’s native Over-The-Air installer. When prompted in Safari, tap{' '}
-                  <strong className="text-[#fff8f2]">Install</strong>. The Tone app icon will download onto your Home Screen.
+                  <strong className="text-[#fff8f2]">Install</strong>. The app will download directly to your Home Screen without stopping at 75%.
                 </p>
 
                 <div className="pt-3">
