@@ -176,15 +176,15 @@ export function QueueDrawer() {
                       onDragEnd={handleDragEnd}
                       className={`relative flex items-center gap-2 p-2 rounded-2xl border transition-all cursor-pointer group shadow-sm ${
                         isDragging
-                          ? 'opacity-40 scale-95 border-dashed border-[#b9cbba] bg-[#3b4b3e]/20'
+                          ? 'opacity-40 scale-95 border-dashed border-white/40 bg-white/[0.08]'
                           : isOver
-                          ? 'border-[#b9cbba] bg-white/[0.14] translate-y-1'
+                          ? 'border-white/30 bg-white/[0.14] translate-y-1'
                           : 'border-white/10 hover:border-white/25 bg-white/[0.04] hover:bg-white/[0.08]'
                       }`}
                     >
                       {/* Drag Grip Handle */}
                       <div
-                        className="text-[#a6ada6]/60 group-hover:text-[#b9cbba] cursor-grab active:cursor-grabbing p-1 -ml-1 rounded hover:bg-white/10 transition-colors flex-shrink-0"
+                        className="text-[#a6ada6]/60 group-hover:text-white cursor-grab active:cursor-grabbing p-1 -ml-1 rounded hover:bg-white/10 transition-colors flex-shrink-0"
                         title="Drag to reorder"
                       >
                         <GripVertical className="w-3.5 h-3.5" />

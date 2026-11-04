@@ -343,15 +343,15 @@ export function AuthenticatedDashboard() {
                     onDragEnd={handleDragEnd}
                     className={`flex items-center gap-2.5 p-2.5 rounded-2xl border transition-all cursor-pointer group select-none ${
                       isDragging
-                        ? 'opacity-40 scale-95 border-dashed border-[#b9cbba] bg-[#3b4b3e]/20'
+                        ? 'opacity-40 scale-95 border-dashed border-white/40 bg-white/[0.08]'
                         : isOver
-                        ? 'border-[#b9cbba] bg-white/[0.12] translate-y-1'
+                        ? 'border-white/30 bg-white/[0.12] translate-y-1'
                         : 'border-white/[0.06] hover:border-white/15 bg-white/[0.02] hover:bg-white/[0.06]'
                     }`}
                   >
                     {/* Drag Handle */}
                     <div
-                      className="text-[#a6ada6]/60 group-hover:text-[#b9cbba] cursor-grab active:cursor-grabbing p-1 -ml-1 rounded hover:bg-white/10 transition-colors flex-shrink-0"
+                      className="text-[#a6ada6]/60 group-hover:text-white cursor-grab active:cursor-grabbing p-1 -ml-1 rounded hover:bg-white/10 transition-colors flex-shrink-0"
                       title="Drag to reorder"
                     >
                       <GripVertical className="w-3.5 h-3.5" />
