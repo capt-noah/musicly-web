@@ -238,14 +238,14 @@ export function AuthenticatedDashboard() {
           <div className="space-y-1">
             <h3 className="text-xl font-bold text-[#fff8f2]">Your Music Cloud is Ready</h3>
             <p className="text-xs text-[#a6ada6] max-w-md mx-auto">
-              Send audio files, voice recordings, or albums to @tone_bot on Telegram to populate your library automatically.
+              Send music directly to @tone_sync_bot on Telegram to populate your library automatically.
             </p>
           </div>
           <Link
             href="/profile"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#b9cbba] hover:bg-[#fff8f2] text-[#0d0f0d] text-xs font-bold shadow-md transition-all hover:scale-105"
           >
-            <span>Connect @tone_bot</span>
+            <span>Connect @tone_sync_bot</span>
           </Link>
         </section>
       )}

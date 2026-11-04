@@ -158,7 +158,7 @@ export function AudiophileBentoGrid() {
               <div className="flex items-center justify-between pb-2 border-b border-white/[0.06] text-[11px] text-[#b9cbba]">
                 <span className="flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                  @tone_bot
+                  @tone_sync_bot
                 </span>
                 <span>STATUS: READY</span>
               </div>

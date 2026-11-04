@@ -260,7 +260,7 @@ export function Sidebar() {
               <div className="min-w-0">
                 <p className="text-[11px] font-bold text-[#fff8f2] truncate">Telegram Cloud</p>
                 <p className="text-[9px] font-mono text-[#a6ada6] truncate">
-                  {telegramStatus.linked ? 'Synced @tone_bot' : 'Pair @tone_bot'}
+                  {telegramStatus.linked ? 'Synced @tone_sync_bot' : 'Pair @tone_sync_bot'}
                 </p>
               </div>
             </div>

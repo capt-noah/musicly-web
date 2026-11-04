@@ -22,7 +22,7 @@ const STAGES = [
     step: '01',
     tab: 'Send',
     title: 'Forward to Telegram Bot',
-    desc: 'Forward your favorite songs, FLAC albums, or audio files to @tone_bot on Telegram. Tone automatically indexes song titles, artists, and high-resolution artwork with unlimited free cloud storage.',
+    desc: 'Send your favorite songs, FLAC albums, or audio files to @tone_sync_bot on Telegram. Tone automatically indexes song titles, artists, and high-resolution artwork with unlimited free cloud storage.',
     stats: [
       { label: 'Storage', val: 'Unlimited Free' },
       { label: 'Setup Time', val: 'Instant' },
@@ -222,7 +222,7 @@ export function AudioArchitectureScroller() {
                       </div>
                       <div>
                         <span className="text-xs font-bold text-[#fff8f2] block">
-                          @tone_bot
+                          @tone_sync_bot
                         </span>
                         <span className="text-[10px] font-mono text-green-400">
                           ONLINE &amp; READY

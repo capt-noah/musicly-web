@@ -233,7 +233,7 @@ export default function ProfilePage() {
             </div>
 
             <p className="text-xs text-[#a6ada6] leading-relaxed">
-              Send audio files, FLAC tracks, and albums directly to @tone_bot on Telegram to import them into your cloud library.
+              Send music directly to @tone_sync_bot on Telegram to automatically sync with your Tone library.
             </p>
           </div>
 
@@ -242,7 +242,7 @@ export default function ProfilePage() {
             className="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-2xl bg-[#1c211d] hover:bg-white/10 border border-white/10 text-xs font-bold text-[#fff8f2] transition-all cursor-pointer hover:border-white/20"
           >
             <ShieldCheck className="w-4 h-4 text-[#b9cbba]" />
-            <span>{telegramStatus.linked ? 'Manage Telegram Pairing' : 'Pair @tone_bot'}</span>
+            <span>{telegramStatus.linked ? 'Manage Telegram Pairing' : 'Pair @tone_sync_bot'}</span>
           </button>
         </div>
 

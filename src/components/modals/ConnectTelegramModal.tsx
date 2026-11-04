@@ -29,7 +29,7 @@ export function ConnectTelegramModal({ onClose }: ConnectTelegramModalProps) {
   } = useSync();
 
   const [token, setToken] = useState<string | null>(null);
-  const [botUsername, setBotUsername] = useState<string>('tone_bot');
+  const [botUsername, setBotUsername] = useState<string>('tone_sync_bot');
   const [copied, setCopied] = useState(false);
   const [isLoadingToken, setIsLoadingToken] = useState(true);
   const [isUnlinking, setIsUnlinking] = useState(false);
@@ -146,9 +146,9 @@ export function ConnectTelegramModal({ onClose }: ConnectTelegramModalProps) {
                   Your Telegram Account is Linked
                 </h4>
                 <p className="text-xs text-[#a6ada6] leading-relaxed">
-                  Send audio files, lossless FLAC tracks, or voice notes directly to{' '}
+                  Send music tracks directly to{' '}
                   <strong className="text-[#fff8f2]">@{botUsername}</strong> on Telegram.
-                  They will automatically appear in your library and stream across all your devices.
+                  They will automatically appear in your Tone library and stream across all your devices.
                 </p>
               </div>
 
@@ -253,7 +253,7 @@ export function ConnectTelegramModal({ onClose }: ConnectTelegramModalProps) {
                 Pair with @{botUsername}
               </h4>
               <p className="text-xs text-[#a6ada6] leading-relaxed">
-                Connect your account in seconds to synchronize and stream your audio tracks losslessly.
+                Send music directly to @{botUsername} on Telegram. Tracks will automatically appear in your Tone library.
               </p>
             </div>
 

@@ -337,7 +337,7 @@ export function PublicProductLanding() {
                 <span>Android APK</span>
               </a>
               <a
-                href="https://t.me/tone_bot"
+                href="https://t.me/tone_sync_bot"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[#b9cbba] transition-colors flex items-center gap-1.5"
