@@ -15,8 +15,9 @@ import {
   HardDrive,
   PictureInPicture2,
   Home,
+  Radio,
 } from 'lucide-react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { useSync } from '@/context/SyncContext';
 import { useDesktop } from '@/context/DesktopContext';
@@ -25,15 +26,18 @@ import { getProfileImageUrl } from '@/lib/utils';
 import { WrapModal } from '../modals/WrapModal';
 import { SyncModal } from '../modals/SyncModal';
 import { StorageManagerModal } from '../desktop/StorageManagerModal';
+import { ToneMatchModal } from '../modals/ToneMatchModal';
 
 export function TopHeader() {
   const pathname = usePathname();
+  const router = useRouter();
   const { user, isAuthenticated, isMounted, isLoading, logout } = useAuth();
   const { syncAll, isSyncing, progress, syncModalOpen, setSyncModalOpen } = useSync();
   const { isDesktop, storageInfo, toggleWidgetWindow } = useDesktop();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [wrapModalOpen, setWrapModalOpen] = useState(false);
   const [storageModalOpen, setStorageModalOpen] = useState(false);
+  const [toneMatchModalOpen, setToneMatchModalOpen] = useState(false);
   const downloadUrl =
     process.env.NEXT_PUBLIC_APK_DOWNLOAD_URL ||
     'https://musicly-4l0y.onrender.com/download/musicly.apk';
@@ -171,6 +175,16 @@ export function TopHeader() {
               /
             </kbd>
           </Link>
+
+          {/* Tone Match (Shazam Recognition) Button */}
+          <button
+            onClick={() => setToneMatchModalOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.08] hover:bg-[#3b4b3e]/60 border border-white/15 hover:border-[#b9cbba]/50 backdrop-blur-md text-xs font-semibold text-[#a6ada6] hover:text-[#fff8f2] transition-all cursor-pointer shadow-inner group"
+            title="Identify ambient music with Tone Match"
+          >
+            <Radio className="w-3.5 h-3.5 text-[#b9cbba] group-hover:animate-pulse" />
+            <span className="hidden md:inline">Tone Match</span>
+          </button>
         </div>
 
         {/* Right Section: Android CTA + Sync Pill + Sync Button + User Profile Capsule */}
@@ -339,6 +353,13 @@ export function TopHeader() {
       {wrapModalOpen && <WrapModal onClose={() => setWrapModalOpen(false)} />}
       {syncModalOpen && <SyncModal onClose={() => setSyncModalOpen(false)} />}
       {storageModalOpen && <StorageManagerModal onClose={() => setStorageModalOpen(false)} />}
+      <ToneMatchModal
+        isOpen={toneMatchModalOpen}
+        onClose={() => setToneMatchModalOpen(false)}
+        onSelectTrack={(title, artist) => {
+          router.push(`/search?q=${encodeURIComponent(`${artist} ${title}`)}`);
+        }}
+      />
     </>
   );
 }

@@ -168,6 +168,30 @@ class ApiClient {
       method: 'POST',
     }, token);
   }
+
+  // Audio Recognition (Tone Match / Shazam)
+  async matchAudio(audioBlob: Blob): Promise<{ success: boolean; match?: any; error?: string; message?: string; durationMs?: number }> {
+    const url = `${this.baseUrl}/api/match`;
+    console.log(`[ToneMatch:Client] Sending ${audioBlob.size} bytes (${audioBlob.type}) to ${url}...`);
+
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/octet-stream',
+      },
+      body: audioBlob,
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      console.error(`[ToneMatch:Client:Error] Server returned HTTP ${res.status}:`, text);
+      throw new Error(`Recognition failed with status ${res.status}: ${text}`);
+    }
+
+    const data = await res.json();
+    console.log(`[ToneMatch:Client] Match response:`, data);
+    return data;
+  }
 }
 
 export const api = new ApiClient();

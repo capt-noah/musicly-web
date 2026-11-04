@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   Home,
   Search,
@@ -15,6 +15,7 @@ import {
   Music2,
   Disc3,
   Mic2,
+  Radio,
 } from 'lucide-react';
 import { useSync } from '@/context/SyncContext';
 import { usePlayer } from '@/context/PlayerContext';
@@ -22,13 +23,16 @@ import { getCoverImageUrl } from '@/lib/utils';
 import { CreatePlaylistModal } from '../modals/CreatePlaylistModal';
 import { ConnectTelegramModal } from '../modals/ConnectTelegramModal';
 import { AudioVisualizer } from '../player/AudioVisualizer';
+import { ToneMatchModal } from '../modals/ToneMatchModal';
 
 export function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const { playlists, albums, artists, telegramStatus } = useSync();
   const { currentSong, isPlaying } = usePlayer();
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [telegramModalOpen, setTelegramModalOpen] = useState(false);
+  const [toneMatchModalOpen, setToneMatchModalOpen] = useState(false);
   const [libraryFilter, setLibraryFilter] = useState<'all' | 'playlists' | 'albums' | 'artists'>('all');
 
   const navItems = [
@@ -143,6 +147,20 @@ export function Sidebar() {
                 </Link>
               );
             })}
+
+            {/* Tone Match (Shazam Recognition) Sidebar Button */}
+            <button
+              onClick={() => setToneMatchModalOpen(true)}
+              className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-[#a6ada6] hover:text-[#fff8f2] hover:bg-white/[0.04] transition-all cursor-pointer group"
+            >
+              <div className="flex items-center gap-3">
+                <Radio className="w-4 h-4 text-[#b9cbba] group-hover:animate-pulse" />
+                <span>Tone Match</span>
+              </div>
+              <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-white/10 text-[#b9cbba]">
+                SHAZAM
+              </span>
+            </button>
           </nav>
         </div>
 
@@ -301,6 +319,14 @@ export function Sidebar() {
       {telegramModalOpen && (
         <ConnectTelegramModal onClose={() => setTelegramModalOpen(false)} />
       )}
+
+      <ToneMatchModal
+        isOpen={toneMatchModalOpen}
+        onClose={() => setToneMatchModalOpen(false)}
+        onSelectTrack={(title, artist) => {
+          router.push(`/search?q=${encodeURIComponent(`${artist} ${title}`)}`);
+        }}
+      />
     </>
   );
 }
