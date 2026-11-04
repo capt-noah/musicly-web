@@ -40,6 +40,49 @@ interface MatchResult {
   isAlreadyInLibrary?: boolean;
 }
 
+/**
+ * Encodes Float32Array PCM samples into a standard 16-bit Mono PCM WAV Blob.
+ * Universally accepted by audio decoders, shazamio-core, and Shazam.
+ */
+function encodeWAV(samples: Float32Array, sampleRate: number): Blob {
+  const buffer = new ArrayBuffer(44 + samples.length * 2);
+  const view = new DataView(buffer);
+
+  const writeString = (offset: number, str: string) => {
+    for (let i = 0; i < str.length; i++) {
+      view.setUint8(offset + i, str.charCodeAt(i));
+    }
+  };
+
+  /* RIFF chunk descriptor */
+  writeString(0, 'RIFF');
+  view.setUint32(4, 36 + samples.length * 2, true);
+  writeString(8, 'WAVE');
+
+  /* 'fmt ' sub-chunk */
+  writeString(12, 'fmt ');
+  view.setUint32(16, 16, true); // subchunk1Size (16 for PCM)
+  view.setUint16(20, 1, true); // audioFormat (1 = PCM)
+  view.setUint16(22, 1, true); // numChannels (1 = Mono)
+  view.setUint32(24, sampleRate, true); // sampleRate
+  view.setUint32(28, sampleRate * 2, true); // byteRate (sampleRate * 1 * 16/8)
+  view.setUint16(32, 2, true); // blockAlign (1 * 16/8)
+  view.setUint16(34, 16, true); // bitsPerSample (16 bits)
+
+  /* 'data' sub-chunk */
+  writeString(36, 'data');
+  view.setUint32(40, samples.length * 2, true);
+
+  /* Write 16-bit PCM samples with linear clamping */
+  let offset = 44;
+  for (let i = 0; i < samples.length; i++, offset += 2) {
+    const s = Math.max(-1, Math.min(1, samples[i]));
+    view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7fff, true);
+  }
+
+  return new Blob([buffer], { type: 'audio/wav' });
+}
+
 interface ToneMatchModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -60,8 +103,10 @@ export function ToneMatchModal({ isOpen, onClose, onSelectTrack }: ToneMatchModa
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const mediaStreamRef = useRef<MediaStream | null>(null);
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const recordedChunksRef = useRef<Blob[]>([]);
+  const processorRef = useRef<ScriptProcessorNode | null>(null);
+  const muteGainRef = useRef<GainNode | null>(null);
+  const pcmChunksRef = useRef<Float32Array[]>([]);
+  const isRecordingRef = useRef<boolean>(false);
   const animFrameRef = useRef<number | null>(null);
   const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const previewAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -86,13 +131,29 @@ export function ToneMatchModal({ isOpen, onClose, onSelectTrack }: ToneMatchModa
 
   // Cleanup on close or unmount
   const stopAllAudio = useCallback(() => {
+    isRecordingRef.current = false;
     if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
 
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+    if (processorRef.current) {
       try {
-        mediaRecorderRef.current.stop();
+        processorRef.current.disconnect();
       } catch (e) {}
+      processorRef.current = null;
+    }
+
+    if (muteGainRef.current) {
+      try {
+        muteGainRef.current.disconnect();
+      } catch (e) {}
+      muteGainRef.current = null;
+    }
+
+    if (analyserRef.current) {
+      try {
+        analyserRef.current.disconnect();
+      } catch (e) {}
+      analyserRef.current = null;
     }
 
     if (mediaStreamRef.current) {
@@ -156,7 +217,7 @@ export function ToneMatchModal({ isOpen, onClose, onSelectTrack }: ToneMatchModa
     setMatchedTrack(null);
     setErrorMessage(null);
     setRecordingSeconds(0);
-    recordedChunksRef.current = [];
+    pcmChunksRef.current = [];
 
     addLog('Mic', 'info', 'Requesting microphone access with raw acoustic constraints (autoGainControl: false)...');
 
@@ -180,72 +241,121 @@ export function ToneMatchModal({ isOpen, onClose, onSelectTrack }: ToneMatchModa
       return;
     }
 
-    // Set up Web Audio Analyser
+    // Set up Web Audio Analyser & PCM Processor
+    let audioCtx: AudioContext;
     try {
       const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
-      const audioCtx = new AudioCtx();
+      audioCtx = new AudioCtx();
       audioContextRef.current = audioCtx;
-      const source = audioCtx.createMediaStreamSource(stream);
+      if (audioCtx.state === 'suspended') {
+        await audioCtx.resume();
+      }
+      addLog('Audio', 'info', `Web Audio Context active (sampleRate: ${audioCtx.sampleRate}Hz)`);
+    } catch (ctxErr: any) {
+      addLog('Error', 'error', `Could not initialize Web Audio Context: ${ctxErr?.message}`);
+      setErrorMessage('Audio context initialization failed.');
+      setPhase('failed');
+      return;
+    }
+
+    const source = audioCtx.createMediaStreamSource(stream);
+
+    // 1. Analyser for live frequency visualization
+    try {
       const analyser = audioCtx.createAnalyser();
       analyser.fftSize = 64;
       analyser.smoothingTimeConstant = 0.8;
       source.connect(analyser);
       analyserRef.current = analyser;
       startVisualizer();
-      addLog('Audio', 'info', `Web Audio Analyser initialized (sampleRate: ${audioCtx.sampleRate}Hz)`);
-    } catch (ctxErr: any) {
-      addLog('Audio', 'warn', `Could not create Web Audio Analyser (visualizer fallback active): ${ctxErr?.message}`);
-    }
+    } catch (e) {}
 
-    // Set up MediaRecorder
-    let mimeType = 'audio/webm';
-    if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
-      mimeType = 'audio/webm;codecs=opus';
-    } else if (MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) {
-      mimeType = 'audio/ogg;codecs=opus';
-    } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
-      mimeType = 'audio/mp4';
-    }
-
-    addLog('Audio', 'info', `Recording with format: ${mimeType}`);
-
+    // 2. ScriptProcessor for lossless 16-bit PCM capture
     try {
-      const recorder = new MediaRecorder(stream, { mimeType });
-      mediaRecorderRef.current = recorder;
+      const bufferSize = 4096;
+      const processor = audioCtx.createScriptProcessor(bufferSize, 1, 1);
+      processorRef.current = processor;
 
-      recorder.ondataavailable = (event) => {
-        if (event.data && event.data.size > 0) {
-          recordedChunksRef.current.push(event.data);
-          addLog('Audio', 'info', `Chunk received: ${(event.data.size / 1024).toFixed(1)} KB`);
+      isRecordingRef.current = true;
+      let lastChunkLogTime = Date.now();
+
+      processor.onaudioprocess = (e) => {
+        if (!isRecordingRef.current) return;
+        const channelData = e.inputBuffer.getChannelData(0);
+        pcmChunksRef.current.push(new Float32Array(channelData));
+
+        const now = Date.now();
+        if (now - lastChunkLogTime >= 1000) {
+          lastChunkLogTime = now;
+          const totalSamples = pcmChunksRef.current.reduce((acc, c) => acc + c.length, 0);
+          addLog('Audio', 'info', `Captured ${(totalSamples / audioCtx.sampleRate).toFixed(1)}s PCM audio (${(totalSamples * 2 / 1024).toFixed(1)} KB)`);
         }
       };
 
-      recorder.onstop = async () => {
-        const fullBlob = new Blob(recordedChunksRef.current, { type: mimeType });
-        addLog('Audio', 'success', `Recording complete: total size ${(fullBlob.size / 1024).toFixed(1)} KB`);
-        await submitAudioForRecognition(fullBlob);
-      };
+      source.connect(processor);
 
-      recorder.start(1000); // 1-second chunks
+      // Route processor to silent gain to keep Web Audio graph pumping
+      const muteGain = audioCtx.createGain();
+      muteGain.gain.value = 0;
+      muteGainRef.current = muteGain;
+      processor.connect(muteGain);
+      muteGain.connect(audioCtx.destination);
+
+      addLog('Audio', 'info', `Lossless PCM capture active (sampleRate: ${audioCtx.sampleRate}Hz, buffer: ${bufferSize})`);
       addLog('Mic', 'info', 'Recording started. Listening to ambient audio for 4.0 seconds...');
     } catch (recErr: any) {
-      addLog('Error', 'error', `MediaRecorder initiation failed: ${recErr?.message}`);
-      setErrorMessage('Audio recording failed. Please check your browser audio settings.');
+      addLog('Error', 'error', `PCM audio capture setup failed: ${recErr?.message}`);
+      setErrorMessage('Audio recording setup failed.');
       setPhase('failed');
       return;
     }
 
     // 4.0-second countdown timer
     let elapsed = 0;
-    timerIntervalRef.current = setInterval(() => {
+    timerIntervalRef.current = setInterval(async () => {
       elapsed += 0.5;
       setRecordingSeconds(Math.min(elapsed, 4.0));
       if (elapsed >= 4.0) {
         if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
-        if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
-          addLog('Mic', 'info', '4.0s elapsed. Stopping recorder & analyzing...');
+        if (isRecordingRef.current) {
+          isRecordingRef.current = false;
+          addLog('Mic', 'info', '4.0s elapsed. Stopping capture & encoding lossless WAV...');
           setPhase('analyzing');
-          mediaRecorderRef.current.stop();
+
+          // Disconnect processor
+          if (processorRef.current) {
+            try {
+              processorRef.current.disconnect();
+            } catch (e) {}
+          }
+          if (muteGainRef.current) {
+            try {
+              muteGainRef.current.disconnect();
+            } catch (e) {}
+          }
+
+          // Concatenate all float32 samples
+          const chunks = pcmChunksRef.current;
+          const totalSamples = chunks.reduce((acc, c) => acc + c.length, 0);
+          if (totalSamples === 0) {
+            addLog('Error', 'error', 'No audio samples captured from microphone');
+            setErrorMessage('No audio captured. Please check your microphone input.');
+            setPhase('failed');
+            return;
+          }
+
+          const mergedSamples = new Float32Array(totalSamples);
+          let offset = 0;
+          for (const chunk of chunks) {
+            mergedSamples.set(chunk, offset);
+            offset += chunk.length;
+          }
+
+          // Encode to standard 16-bit PCM WAV
+          const wavBlob = encodeWAV(mergedSamples, audioCtx.sampleRate);
+          addLog('Audio', 'success', `Lossless WAV encoded: ${(wavBlob.size / 1024).toFixed(1)} KB (sampleRate: ${audioCtx.sampleRate}Hz, 16-bit PCM mono)`);
+
+          await submitAudioForRecognition(wavBlob);
         }
       }
     }, 500);
