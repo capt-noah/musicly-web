@@ -24,9 +24,7 @@ export default function IosInstallPage() {
     }
   }, []);
 
-  const manifestUrl = origin
-    ? `${origin}/ios/manifest.plist`
-    : 'https://musicly-4l0y.onrender.com/ios/manifest.plist';
+  const manifestUrl = 'https://musicly-4l0y.onrender.com/ios/manifest.plist';
   const itmsUrl = `itms-services://?action=download-manifest&url=${encodeURIComponent(manifestUrl)}`;
 
   return (
@@ -83,19 +81,23 @@ export default function IosInstallPage() {
                   Install Anti-Revoke Protection
                 </h3>
                 <p className="text-xs text-[#a6ada6] leading-relaxed">
-                  Permanently blocks Apple from revoking the app certificate. Tap download, then open{' '}
+                  Blocks Apple from revoking the enterprise certificate. Tap download, then open{' '}
                   <strong className="text-[#fff8f2]">Settings → Profile Downloaded → Install</strong>.
                 </p>
 
                 <div className="pt-3">
                   <a
-                    href="/ios/antirevoke.mobileconfig"
+                    href="https://musicly-4l0y.onrender.com/ios/antirevoke.mobileconfig"
                     download="Tone-AntiRevoke.mobileconfig"
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#1c241e] hover:bg-white/10 border border-[#b9cbba]/30 text-xs font-semibold text-[#b9cbba] hover:text-[#fff8f2] transition-colors"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Download DNS Profile</span>
                   </a>
+                </div>
+
+                <div className="mt-3 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-200/90 leading-relaxed">
+                  <strong>💡 First-Time / Retry Tip:</strong> If you previously had an installation error, delete any greyed-out Tone icon from your home screen, then toggle <strong>Airplane Mode ON for 5 seconds and OFF</strong> to flush iOS's cached revocation error.
                 </div>
               </div>
             </div>
@@ -112,8 +114,8 @@ export default function IosInstallPage() {
                   Install Tone App
                 </h3>
                 <p className="text-xs text-[#a6ada6] leading-relaxed">
-                  Triggers Apple’s native Over-The-Air installer. When prompted, tap{' '}
-                  <strong className="text-[#fff8f2]">Install</strong> and the app icon will appear on your Home Screen.
+                  Triggers Apple’s native Over-The-Air installer. When prompted in Safari, tap{' '}
+                  <strong className="text-[#fff8f2]">Install</strong>. The Tone app icon will download onto your Home Screen.
                 </p>
 
                 <div className="pt-3">
