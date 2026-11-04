@@ -16,9 +16,12 @@ import {
   ShieldCheck,
   RefreshCw,
   Mail,
+  Disc3,
+  Sliders,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useSync } from '@/context/SyncContext';
+import { usePlayer } from '@/context/PlayerContext';
 import { getProfileImageUrl } from '@/lib/utils';
 import { ConnectTelegramModal } from '@/components/modals/ConnectTelegramModal';
 import { WrapModal } from '@/components/modals/WrapModal';
@@ -27,6 +30,16 @@ import { ProfileSkeleton } from '@/components/shared/Skeletons';
 export default function ProfilePage() {
   const { user, isAuthenticated, isLoading, isMounted, logout, updateAvatar, updateEmail } = useAuth();
   const { stats, telegramStatus, isPageLoading } = useSync();
+  const {
+    isAutoMixEnabled,
+    autoMixDuration,
+    enableBassSwap,
+    preserveAlbumGapless,
+    toggleAutoMix,
+    setAutoMixDuration,
+    toggleBassSwap,
+    toggleAlbumGapless,
+  } = usePlayer();
   const [telegramModalOpen, setTelegramModalOpen] = useState(false);
   const [wrapModalOpen, setWrapModalOpen] = useState(false);
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
@@ -320,6 +333,119 @@ export default function ProfilePage() {
           )}
         </div>
       </div>
+
+      {/* AutoMix & Playback Settings Card */}
+      <section className="space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Disc3 className="w-5 h-5 text-[#b9cbba]" />
+            <h3 className="text-lg font-bold text-[#fff8f2]">Audio & AutoMix Playback</h3>
+          </div>
+          <span className="text-[10px] font-mono tracking-widest text-[#b9cbba] uppercase bg-[#3b4b3e]/40 px-3 py-1 rounded-full border border-[#b9cbba]/20 font-semibold">
+            {isAutoMixEnabled ? `${autoMixDuration.toFixed(1)}s Mix Active` : 'Disabled'}
+          </span>
+        </div>
+
+        <div className="p-6 sm:p-7 rounded-[28px] bg-[#111412] border border-white/[0.08] shadow-xl space-y-6">
+          {/* Master AutoMix Toggle */}
+          <div className="flex items-center justify-between gap-4">
+            <div className="space-y-1">
+              <h4 className="text-sm font-bold text-[#fff8f2]">AutoMix Transitions</h4>
+              <p className="text-xs text-[#a6ada6] leading-relaxed">
+                Seamless equal-power crossfading with acoustic volume blending like Apple Music.
+              </p>
+            </div>
+
+            <button
+              onClick={toggleAutoMix}
+              className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                isAutoMixEnabled ? 'bg-[#b9cbba]' : 'bg-white/10'
+              }`}
+            >
+              <span
+                className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-[#0d0f0d] shadow-lg ring-0 transition duration-200 ease-in-out ${
+                  isAutoMixEnabled ? 'translate-x-5' : 'translate-x-0'
+                }`}
+              />
+            </button>
+          </div>
+
+          {isAutoMixEnabled && (
+            <>
+              <div className="h-px bg-white/[0.08]" />
+
+              {/* Duration Slider */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Sliders className="w-4 h-4 text-[#b9cbba]" />
+                    <span className="text-xs font-bold text-[#fff8f2]">Transition Duration</span>
+                  </div>
+                  <span className="text-xs font-mono font-black text-[#b9cbba] bg-white/[0.06] px-2.5 py-1 rounded-lg border border-white/10">
+                    {autoMixDuration.toFixed(1)}s
+                  </span>
+                </div>
+
+                <div className="space-y-1">
+                  <input
+                    type="range"
+                    min="2"
+                    max="12"
+                    step="0.5"
+                    value={autoMixDuration}
+                    onChange={(e) => setAutoMixDuration(parseFloat(e.target.value))}
+                    className="w-full h-1.5 bg-white/15 rounded-lg appearance-none cursor-pointer focus:outline-none accent-[#b9cbba]"
+                  />
+                  <div className="flex justify-between text-[10px] font-mono text-[#a6ada6]">
+                    <span>2.0s (Quick Drop)</span>
+                    <span>5.0s (Sweet Spot)</span>
+                    <span>12.0s (Club Mix)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="h-px bg-white/[0.08]" />
+
+              {/* Sub-options: Bass Swap & Album Gapless */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div
+                  onClick={toggleBassSwap}
+                  className="p-4 rounded-2xl bg-[#1c211d]/70 border border-white/[0.06] hover:border-white/15 cursor-pointer transition-all flex items-center justify-between"
+                >
+                  <div className="space-y-0.5 pr-2">
+                    <p className="text-xs font-bold text-[#fff8f2]">Dynamic Bass Swap</p>
+                    <p className="text-[11px] text-[#a6ada6]">Attenuates &lt;120Hz low-end to prevent mud</p>
+                  </div>
+                  <div
+                    className={`w-4 h-4 rounded-full border flex items-center justify-center flex-shrink-0 ${
+                      enableBassSwap ? 'bg-[#b9cbba] border-[#b9cbba]' : 'border-white/30'
+                    }`}
+                  >
+                    {enableBassSwap && <div className="w-1.5 h-1.5 rounded-full bg-[#0d0f0d]" />}
+                  </div>
+                </div>
+
+                <div
+                  onClick={toggleAlbumGapless}
+                  className="p-4 rounded-2xl bg-[#1c211d]/70 border border-white/[0.06] hover:border-white/15 cursor-pointer transition-all flex items-center justify-between"
+                >
+                  <div className="space-y-0.5 pr-2">
+                    <p className="text-xs font-bold text-[#fff8f2]">Preserve Album Gapless</p>
+                    <p className="text-[11px] text-[#a6ada6]">Disables blend for continuous album tracks</p>
+                  </div>
+                  <div
+                    className={`w-4 h-4 rounded-full border flex items-center justify-center flex-shrink-0 ${
+                      preserveAlbumGapless ? 'bg-[#b9cbba] border-[#b9cbba]' : 'border-white/30'
+                    }`}
+                  >
+                    {preserveAlbumGapless && <div className="w-1.5 h-1.5 rounded-full bg-[#0d0f0d]" />}
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </section>
 
       {/* Listening Stats Bento Grid */}
       <section className="space-y-3">

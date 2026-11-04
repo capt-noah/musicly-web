@@ -48,6 +48,15 @@ interface PlayerContextType {
   reorderQueue: (fromIndex: number, toIndex: number) => void;
   clearQueue: () => void;
   setQueue: (songs: Song[]) => void;
+  isAutoMixEnabled: boolean;
+  autoMixDuration: number;
+  enableBassSwap: boolean;
+  preserveAlbumGapless: boolean;
+  isAutoMixing: boolean;
+  toggleAutoMix: () => void;
+  setAutoMixDuration: (sec: number) => void;
+  toggleBassSwap: () => void;
+  toggleAlbumGapless: () => void;
 }
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
@@ -69,6 +78,13 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [isLoadingAudio, setIsLoadingAudio] = useState<boolean>(false);
   const [playbackError, setPlaybackError] = useState<string | null>(null);
+
+  // AutoMix State
+  const [isAutoMixEnabled, setIsAutoMixEnabled] = useState<boolean>(() => audioEngine.getAutoMixEnabled());
+  const [autoMixDuration, setAutoMixDurationState] = useState<number>(() => audioEngine.getAutoMixDuration());
+  const [enableBassSwap, setEnableBassSwap] = useState<boolean>(() => audioEngine.getEnableBassSwap());
+  const [preserveAlbumGapless, setPreserveAlbumGapless] = useState<boolean>(() => audioEngine.getPreserveAlbumGapless());
+  const [isAutoMixing, setIsAutoMixing] = useState<boolean>(false);
 
   const currentSongRef = useRef<Song | null>(null);
   const queueRef = useRef<Song[]>([]);
@@ -268,10 +284,57 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     };
   }, [recordPlay]);
 
-  // Configure Audio Engine Track End & MediaSession
+  // Configure Audio Engine Track End, MediaSession & AutoMix Providers
   useEffect(() => {
     audioEngine.setTrackEndCallback(handleTrackEnd);
     audioEngine.setMediaSessionCallbacks(nextTrack, prevTrack);
+
+    audioEngine.setNextTrackProvider(() => {
+      if (repeatModeRef.current === 'one') return null;
+      const currentQueue = queueRef.current;
+      const currentIndex = queueIndexRef.current;
+      if (currentQueue.length === 0) return null;
+
+      let nextIdx = -1;
+      if (isShuffleRef.current) {
+        if (currentQueue.length > 1) {
+          do {
+            nextIdx = Math.floor(Math.random() * currentQueue.length);
+          } while (nextIdx === currentIndex && currentQueue.length > 1);
+        } else {
+          nextIdx = 0;
+        }
+      } else if (currentIndex + 1 < currentQueue.length) {
+        nextIdx = currentIndex + 1;
+      } else if (repeatModeRef.current === 'all') {
+        nextIdx = 0;
+      }
+
+      if (nextIdx < 0 || nextIdx >= currentQueue.length) return null;
+      const nextSong = currentQueue[nextIdx];
+      const audioUrl = getAudioStreamUrl(nextSong.audioFileId);
+      return { song: nextSong, audioUrl, nextIndex: nextIdx };
+    });
+
+    audioEngine.setAutoMixHandoffCallback((nextSong, nextIdx) => {
+      playDurationLoggedRef.current = false;
+      playbackStartTimeRef.current = Date.now();
+      setCurrentSong(nextSong);
+      if (nextIdx !== undefined) {
+        setQueueIndex(nextIdx);
+      }
+      setIsAutoMixing(true);
+      const coverUrl = getCoverImageUrl(nextSong.coverFileId, nextSong.audioFileId || nextSong.fileId);
+      extractDominantColors(coverUrl).then((colors) => {
+        if (typeof document !== 'undefined') {
+          document.documentElement.style.setProperty('--ambient-glow', colors.primary);
+          document.documentElement.style.setProperty('--ambient-secondary', colors.secondary);
+        }
+      });
+      setTimeout(() => {
+        setIsAutoMixing(false);
+      }, (audioEngine.getAutoMixDuration() * 0.5 + 0.5) * 1000);
+    });
   }, [handleTrackEnd, nextTrack, prevTrack]);
 
   const lastTimeSyncRef = useRef<number>(0);
@@ -450,6 +513,35 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const toggleAutoMix = useCallback(() => {
+    setIsAutoMixEnabled((prev) => {
+      const next = !prev;
+      audioEngine.setAutoMixEnabled(next);
+      return next;
+    });
+  }, []);
+
+  const setAutoMixDuration = useCallback((sec: number) => {
+    setAutoMixDurationState(sec);
+    audioEngine.setAutoMixDuration(sec);
+  }, []);
+
+  const toggleBassSwap = useCallback(() => {
+    setEnableBassSwap((prev) => {
+      const next = !prev;
+      audioEngine.setEnableBassSwap(next);
+      return next;
+    });
+  }, []);
+
+  const toggleAlbumGapless = useCallback(() => {
+    setPreserveAlbumGapless((prev) => {
+      const next = !prev;
+      audioEngine.setPreserveAlbumGapless(next);
+      return next;
+    });
+  }, []);
+
   return (
     <PlayerContext.Provider
       value={{
@@ -492,6 +584,15 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
         reorderQueue,
         clearQueue,
         setQueue: setQueueState,
+        isAutoMixEnabled,
+        autoMixDuration,
+        enableBassSwap,
+        preserveAlbumGapless,
+        isAutoMixing,
+        toggleAutoMix,
+        setAutoMixDuration,
+        toggleBassSwap,
+        toggleAlbumGapless,
       }}
     >
       {children}

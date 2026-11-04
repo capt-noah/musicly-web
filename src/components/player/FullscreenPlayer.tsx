@@ -23,6 +23,7 @@ import {
   Loader2,
   GripVertical,
   Plus,
+  Disc3,
 } from 'lucide-react';
 import { usePlayer } from '@/context/PlayerContext';
 import { useSync } from '@/context/SyncContext';
@@ -69,6 +70,10 @@ export function FullscreenPlayer() {
     removeFromQueue,
     reorderQueue,
     clearQueue,
+    isAutoMixEnabled,
+    autoMixDuration,
+    toggleAutoMix,
+    isAutoMixing,
   } = usePlayer();
 
   const { isLiked, toggleLike, updateSongLyrics } = useSync();
@@ -541,15 +546,32 @@ export function FullscreenPlayer() {
 
         {/* Row 2: Transport Playback Controls */}
         <div className="flex items-center justify-between px-2">
-          <button
-            onClick={toggleShuffle}
-            className={`p-2 rounded-full transition-all cursor-pointer ${
-              isShuffle ? 'text-[#b9cbba] bg-[#3b4b3e]/40 shadow-inner' : 'text-[#a6ada6] hover:text-[#fff8f2]'
-            }`}
-            title="Shuffle (S)"
-          >
-            <Shuffle className="w-4 h-4 sm:w-5 sm:h-5" />
-          </button>
+          <div className="flex items-center gap-1 sm:gap-2">
+            <button
+              onClick={toggleShuffle}
+              className={`p-2 rounded-full transition-all cursor-pointer ${
+                isShuffle ? 'text-[#b9cbba] bg-[#3b4b3e]/40 shadow-inner' : 'text-[#a6ada6] hover:text-[#fff8f2]'
+              }`}
+              title="Shuffle (S)"
+            >
+              <Shuffle className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+
+            <button
+              onClick={toggleAutoMix}
+              className={`p-2 rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${
+                isAutoMixEnabled ? 'text-[#b9cbba] bg-[#3b4b3e]/40 shadow-inner' : 'text-[#a6ada6] hover:text-[#fff8f2]'
+              } ${isAutoMixing ? 'animate-pulse ring-1 ring-[#b9cbba]/50' : ''}`}
+              title={`AutoMix: ${isAutoMixEnabled ? `${autoMixDuration.toFixed(1)}s Active` : 'Disabled'}`}
+            >
+              <Disc3 className={`w-4 h-4 sm:w-5 sm:h-5 ${isAutoMixing ? 'animate-spin' : ''}`} />
+              {isAutoMixEnabled && (
+                <span className="hidden sm:inline text-[10px] font-mono font-bold tracking-tight">
+                  {autoMixDuration.toFixed(1)}s
+                </span>
+              )}
+            </button>
+          </div>
 
           <div className="flex items-center gap-4 sm:gap-6">
             <button
