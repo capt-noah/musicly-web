@@ -208,7 +208,7 @@ export default function IosInstallPage() {
                 </p>
                 <div className="p-3 rounded-xl bg-black/40 border border-white/5 font-mono text-[11px] sm:text-xs text-[#b9cbba] space-y-1 mt-2">
                   <div>Settings ➔ General ➔ VPN &amp; Device Management</div>
-                  <div>➔ Under Enterprise App: Tap <strong>Moving Increasingly Interconnected Technology Co., Ltd</strong></div>
+                  <div>➔ Under Enterprise App: Tap <strong>Beihang University</strong></div>
                   <div>➔ Tap <strong>Trust</strong></div>
                 </div>
               </div>
@@ -226,7 +226,7 @@ export default function IosInstallPage() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-[#fff8f2] transition-colors"
             >
               <Download className="w-3.5 h-3.5 text-[#b9cbba]" />
-              <span>Download Raw Tone-Enterprise.ipa (34 MB)</span>
+              <span>Download Raw Tone-Enterprise.ipa (8.7 MB)</span>
             </a>
           </div>
         </div>
