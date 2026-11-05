@@ -70,6 +70,58 @@ export default function IosInstallPage() {
 
         {/* 3 Step Interactive Card List */}
         <div className="space-y-4 mb-8">
+          {/* ESign Recommended Direct Install Card */}
+          <div className="relative rounded-2xl bg-gradient-to-br from-[#1b261e] via-[#141b16] to-[#0f1410] border border-[#b9cbba]/40 p-5 sm:p-6 shadow-[0_0_30px_rgba(185,203,186,0.15)] transition-all">
+            <div className="flex items-start gap-3.5">
+              <div className="w-8 h-8 rounded-full bg-[#b9cbba] text-[#0d0f0d] flex items-center justify-center font-black text-sm shrink-0 mt-0.5 shadow-[0_0_20px_rgba(185,203,186,0.5)]">
+                ★
+              </div>
+              <div className="flex-1 space-y-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="text-base sm:text-lg font-black text-[#fff8f2]">
+                    Install with ESign (100% Working)
+                  </h3>
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-[10px] font-bold text-emerald-300">
+                    Recommended ✅
+                  </span>
+                </div>
+                <p className="text-xs text-[#a6ada6] leading-relaxed">
+                  Sign Tone directly inside ESign with your active certificate. Zero 75% OTA errors, full master lossless audio, and offline library caching.
+                </p>
+
+                <div className="pt-2 flex flex-wrap gap-2.5">
+                  <a
+                    href="https://musicly-4l0y.onrender.com/ios/Tone.ipa"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#b9cbba] hover:bg-[#fff8f2] text-[#0d0f0d] text-xs sm:text-sm font-bold shadow-[0_0_20px_rgba(185,203,186,0.25)] transition-all hover:scale-105 active:scale-95"
+                  >
+                    <Download className="w-4 h-4" />
+                    <span>Download Tone.ipa (36 MB)</span>
+                  </a>
+
+                  <a
+                    href="https://musicly-web.vercel.app/esign.json"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#1c241e] hover:bg-white/10 border border-[#b9cbba]/30 text-xs font-semibold text-[#b9cbba] hover:text-[#fff8f2] transition-colors"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span>ESign Repo Source</span>
+                  </a>
+                </div>
+
+                <div className="mt-3 p-3.5 rounded-xl bg-black/50 border border-white/10 space-y-2 text-[11px] sm:text-xs text-[#a6ada6] leading-relaxed">
+                  <div className="font-bold text-[#fff8f2] flex items-center gap-1.5">
+                    <span>How to Install in ESign in 30 Seconds:</span>
+                  </div>
+                  <div>1. Tap <strong>Download Tone.ipa</strong> above (or in ESign, tap <strong>⋯ ➔ Download</strong> and paste URL).</div>
+                  <div>2. In ESign, open the <strong>Apps / File</strong> tab and tap <strong>Tone.ipa</strong>.</div>
+                  <div>3. Tap <strong>Signature (Sign)</strong> with your active cert ➔ tap <strong>Install</strong>.</div>
+                  <div className="text-emerald-400 font-semibold">Done! Tone installs directly onto your Home Screen.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* STEP 1 */}
           <div className="relative rounded-2xl bg-gradient-to-br from-[#18201a] via-[#121613] to-[#0f120f] border border-white/10 p-5 sm:p-6 shadow-xl transition-all">
             <div className="flex items-start gap-3.5">
