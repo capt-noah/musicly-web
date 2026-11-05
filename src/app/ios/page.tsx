@@ -42,7 +42,7 @@ export default function IosInstallPage() {
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#fff8f2] mb-1.5 flex items-center justify-center gap-2.5">
             <span>Install Tone</span>
             <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-white/10 text-[#b9cbba] border border-white/10 tracking-wide">
-              v1.1.0
+              v1.1.1
             </span>
           </h1>
 

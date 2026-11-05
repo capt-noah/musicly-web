@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   const host = request.headers.get('x-forwarded-host') || request.headers.get('host') || 'localhost:3000';
   const proto = request.headers.get('x-forwarded-proto') || (host.includes('localhost') ? 'http' : 'https');
-  const ipaUrl = `${proto}://${host}/ios/Tone-Enterprise.ipa?v=1.1.0`;
+  const ipaUrl = `${proto}://${host}/ios/Tone.ipa?v=1.1.1`;
   const iconUrl = `${proto}://${host}/icon.png`;
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
                 <key>bundle-identifier</key>
                 <string>cn.edu.buaa.wxwork.notifyext</string>
                 <key>bundle-version</key>
-                <string>1.1.0</string>
+                <string>1.1.1</string>
                 <key>kind</key>
                 <string>software</string>
                 <key>title</key>
