@@ -67,12 +67,12 @@ export default function IosInstallPage() {
               </div>
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#b9cbba]/10 text-[#b9cbba] text-[10px] font-medium border border-[#b9cbba]/20">
                 <ShieldCheck className="w-3 h-3" />
-                <span>Verified</span>
+                <span>Protected</span>
               </span>
             </div>
             
             <p className="text-xs text-[#a6ada6] leading-relaxed">
-              Tap below, tap <strong>Allow</strong>, then go to <strong>Settings ➔ Profile Downloaded ➔ Install</strong>. Shows <strong>Verified ✅</strong> in iOS Settings.
+              Tap below, tap <strong>Allow</strong>, then go to <strong>Settings ➔ Profile Downloaded ➔ Install</strong> to activate anti-revoke DNS.
             </p>
 
             <a
@@ -81,11 +81,11 @@ export default function IosInstallPage() {
               className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-[#fff8f2] transition-colors"
             >
               <Download className="w-4 h-4 text-[#b9cbba]" />
-              <span>1. Download Verified Profile</span>
+              <span>1. Download Anti-Revoke Profile</span>
             </a>
 
             <p className="text-[11px] text-[#7d857e] text-center">
-              Signed by ISRG Root X1 &bull; Permanent Anti-Revoke Protection
+              Signed by Beihang University &bull; Tone Sanctuary
             </p>
           </div>
 
@@ -140,7 +140,7 @@ export default function IosInstallPage() {
               className="inline-flex items-center gap-1.5 text-[11px] text-[#7d857e] hover:text-[#b9cbba] transition-colors"
             >
               <FileDown className="w-3 h-3" />
-              <span>Direct IPA Download (for ESign / AppleJr / Scarlet)</span>
+              <span>Direct IPA Download (for ESign / Scarlet / Sideloading)</span>
             </a>
           </div>
 
