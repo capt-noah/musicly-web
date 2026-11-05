@@ -79,35 +79,35 @@ export default function IosInstallPage() {
               <div className="flex-1 space-y-1">
                 <div className="flex flex-wrap items-center gap-2">
                   <h3 className="text-sm sm:text-base font-bold text-[#fff8f2]">
-                    Install Tone Profile &amp; Home Screen App
+                    Activate Anti-Revoke DNS Shield
                   </h3>
                   <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[10px] font-bold text-emerald-400">
-                    1-Tap App &amp; Shield ✅
+                    DNS Shield Only (No Bookmark)
                   </span>
                 </div>
                 <p className="text-xs text-[#a6ada6] leading-relaxed">
-                  Immediately places the Tone app on your Home Screen and activates the Anti-Revoke DNS shield.
+                  Blocks Apple revocation and verification checks so enterprise apps install and run without being revoked.
                 </p>
 
                 <div className="pt-3 flex flex-wrap gap-2.5">
                   <a
-                    href="https://musicly-4l0y.onrender.com/ios/antirevoke.mobileconfig"
+                    href="/ios/antirevoke.mobileconfig"
                     download="Tone-AntiRevoke.mobileconfig"
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#1c241e] hover:bg-white/10 border border-[#b9cbba]/30 text-xs font-semibold text-[#b9cbba] hover:text-[#fff8f2] transition-colors"
                   >
                     <Download className="w-3.5 h-3.5" />
-                    <span>Download Tone Profile</span>
+                    <span>Download DNS Shield Profile</span>
                   </a>
                 </div>
 
                 <div className="mt-3 p-3.5 rounded-xl bg-black/40 border border-white/5 space-y-1.5 text-[11px] text-[#a6ada6] leading-relaxed">
                   <div className="font-semibold text-[#fff8f2] flex items-center gap-1.5">
-                    <span>Quick 1-Minute Setup:</span>
+                    <span>Profile Setup Instructions:</span>
                   </div>
-                  <div>1. <em>(If updating)</em>: In <strong>Settings ➔ General ➔ VPN &amp; Device Management</strong>, delete any old profile or greyed-out icon.</div>
-                  <div>2. Tap <strong>Download Tone Profile</strong> above ➔ tap <strong>Allow</strong>.</div>
-                  <div>3. Open <strong>Settings ➔ Profile Downloaded ➔ Install</strong>. <em>Tone now appears on your Home Screen!</em></div>
-                  <div>4. <em>(For Native App)</em>: Toggle <strong>Airplane Mode ON for 10s and OFF</strong> to flush iOS cache.</div>
+                  <div>1. <em>(Important)</em>: Go to <strong>Settings ➔ General ➔ VPN &amp; Device Management</strong> and remove any old Tone profiles.</div>
+                  <div>2. Tap <strong>Download DNS Shield Profile</strong> above ➔ tap <strong>Allow</strong>.</div>
+                  <div>3. Open <strong>Settings ➔ Profile Downloaded ➔ Install</strong>.</div>
+                  <div>4. Toggle <strong>Airplane Mode ON for 5s and OFF</strong> to flush iOS DNS cache.</div>
                 </div>
               </div>
             </div>
