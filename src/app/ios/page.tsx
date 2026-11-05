@@ -105,9 +105,10 @@ export default function IosInstallPage() {
                   <div className="font-semibold text-[#fff8f2] flex items-center gap-1.5">
                     <span>Quick 1-Minute Setup Instructions:</span>
                   </div>
-                  <div>1. Tap <strong>Download Verified Profile</strong> above ➔ tap <strong>Allow</strong>.</div>
-                  <div>2. Open <strong>Settings ➔ Profile Downloaded ➔ Install</strong> (confirm it says <strong className="text-emerald-400">Verified ✅</strong>).</div>
-                  <div>3. <em>(Crucial if retrying)</em>: If you previously saw an installation error, delete any greyed-out Tone icon, then toggle <strong>Airplane Mode ON for 10 seconds and OFF</strong> to flush iOS's cached error.</div>
+                  <div>1. <em>(If updating)</em>: In <strong>Settings ➔ General ➔ VPN &amp; Device Management</strong>, delete any old profile and delete any greyed-out Tone icon.</div>
+                  <div>2. Tap <strong>Download Verified Profile</strong> above ➔ tap <strong>Allow</strong>.</div>
+                  <div>3. Open <strong>Settings ➔ Profile Downloaded ➔ Install</strong> (confirm it says <strong className="text-emerald-400">Verified ✅</strong>).</div>
+                  <div>4. <em>(Crucial Cache Flush)</em>: Toggle <strong>Airplane Mode ON for 10 seconds and OFF</strong> so iOS flushes any cached verification blocks.</div>
                 </div>
               </div>
             </div>
@@ -161,6 +162,21 @@ export default function IosInstallPage() {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* ALTERNATIVE: DIRECT IPA DOWNLOAD */}
+          <div className="relative rounded-2xl bg-gradient-to-br from-[#141815] to-[#0f120f] border border-white/5 p-4 sm:p-5 text-center">
+            <p className="text-xs text-[#a6ada6] mb-3">
+              Want to share via Telegram / AirDrop or install using AltStore, SideStore, Feather, or TrollStore?
+            </p>
+            <a
+              href="https://musicly-4l0y.onrender.com/ios/Tone-Enterprise.ipa"
+              download="Tone-Enterprise.ipa"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-[#fff8f2] transition-colors"
+            >
+              <Download className="w-3.5 h-3.5 text-[#b9cbba]" />
+              <span>Download Raw Tone-Enterprise.ipa (34 MB)</span>
+            </a>
           </div>
         </div>
 
