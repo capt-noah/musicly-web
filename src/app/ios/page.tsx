@@ -91,7 +91,7 @@ export default function IosInstallPage() {
 
                 <div className="pt-2 flex flex-wrap gap-2.5">
                   <a
-                    href="https://musicly-4l0y.onrender.com/ios/Tone.ipa"
+                    href="https://musicly-4l0y.onrender.com/ios/Tone-Enterprise.ipa"
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#b9cbba] hover:bg-[#fff8f2] text-[#0d0f0d] text-xs sm:text-sm font-bold shadow-[0_0_20px_rgba(185,203,186,0.25)] transition-all hover:scale-105 active:scale-95"
                   >
                     <Download className="w-4 h-4" />
