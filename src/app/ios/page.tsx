@@ -216,18 +216,28 @@ export default function IosInstallPage() {
           </div>
 
           {/* ALTERNATIVE: DIRECT IPA DOWNLOAD */}
-          <div className="relative rounded-2xl bg-gradient-to-br from-[#141815] to-[#0f120f] border border-white/5 p-4 sm:p-5 text-center">
-            <p className="text-xs text-[#a6ada6] mb-3">
-              Want to share via Telegram / AirDrop or install using AltStore, SideStore, Feather, or TrollStore?
+          <div className="relative rounded-2xl bg-gradient-to-br from-[#141815] to-[#0f120f] border border-white/5 p-4 sm:p-5 text-center space-y-3">
+            <p className="text-xs text-[#a6ada6]">
+              Want to share via Telegram / AirDrop or sign with your own certificate using AppleJr, ESign, Feather, or TrollStore?
             </p>
-            <a
-              href="https://musicly-4l0y.onrender.com/ios/Tone-Enterprise.ipa"
-              download="Tone-Enterprise.ipa"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-[#fff8f2] transition-colors"
-            >
-              <Download className="w-3.5 h-3.5 text-[#b9cbba]" />
-              <span>Download Raw Tone-Enterprise.ipa (8.7 MB)</span>
-            </a>
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <a
+                href="https://musicly-4l0y.onrender.com/ios/Tone-Enterprise.ipa"
+                download="Tone-Enterprise.ipa"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-[#fff8f2] transition-colors"
+              >
+                <Download className="w-3.5 h-3.5 text-[#b9cbba]" />
+                <span>Tone-Enterprise.ipa (Pre-signed 8.5 MB)</span>
+              </a>
+              <a
+                href="https://musicly-4l0y.onrender.com/ios/Tone-unsigned.ipa"
+                download="Tone-unsigned.ipa"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-[#a6ada6] hover:text-[#fff8f2] transition-colors"
+              >
+                <Download className="w-3.5 h-3.5 text-[#a6ada6]" />
+                <span>Tone-unsigned.ipa (Raw 8.3 MB)</span>
+              </a>
+            </div>
           </div>
         </div>
 
