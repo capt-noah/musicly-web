@@ -60,11 +60,11 @@ export default function IosInstallPage() {
 
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#b9cbba]/10 border border-[#b9cbba]/25 text-xs font-mono font-medium text-[#b9cbba]">
             <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Enterprise Edition • Valid through 2028</span>
+            <span>Enterprise Edition • Valid through 2027</span>
           </div>
 
           <p className="mt-3 text-xs sm:text-sm text-[#a6ada6] max-w-sm mx-auto leading-relaxed">
-            Install the native Tone iOS app directly to your iPhone without computer tethering, App Store limits, or 7-day expirations.
+            Install Tone directly to your iPhone with full Master Audio, offline cache, and zero 7-day limits.
           </p>
         </div>
 
@@ -79,15 +79,14 @@ export default function IosInstallPage() {
               <div className="flex-1 space-y-1">
                 <div className="flex flex-wrap items-center gap-2">
                   <h3 className="text-sm sm:text-base font-bold text-[#fff8f2]">
-                    Install Verified Anti-Revoke Profile
+                    Install Tone Profile &amp; Home Screen App
                   </h3>
                   <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[10px] font-bold text-emerald-400">
-                    Verified ✅
+                    1-Tap App &amp; Shield ✅
                   </span>
                 </div>
                 <p className="text-xs text-[#a6ada6] leading-relaxed">
-                  Cryptographically blocks Apple from revoking the enterprise certificate. Displays a green{' '}
-                  <strong className="text-emerald-400">Verified ✅</strong> checkmark in iOS Settings.
+                  Immediately places the Tone app on your Home Screen and activates the Anti-Revoke DNS shield.
                 </p>
 
                 <div className="pt-3 flex flex-wrap gap-2.5">
@@ -97,18 +96,18 @@ export default function IosInstallPage() {
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#1c241e] hover:bg-white/10 border border-[#b9cbba]/30 text-xs font-semibold text-[#b9cbba] hover:text-[#fff8f2] transition-colors"
                   >
                     <Download className="w-3.5 h-3.5" />
-                    <span>Download Verified Profile</span>
+                    <span>Download Tone Profile</span>
                   </a>
                 </div>
 
                 <div className="mt-3 p-3.5 rounded-xl bg-black/40 border border-white/5 space-y-1.5 text-[11px] text-[#a6ada6] leading-relaxed">
                   <div className="font-semibold text-[#fff8f2] flex items-center gap-1.5">
-                    <span>Quick 1-Minute Setup Instructions:</span>
+                    <span>Quick 1-Minute Setup:</span>
                   </div>
-                  <div>1. <em>(If updating)</em>: In <strong>Settings ➔ General ➔ VPN &amp; Device Management</strong>, delete any old profile and delete any greyed-out Tone icon.</div>
-                  <div>2. Tap <strong>Download Verified Profile</strong> above ➔ tap <strong>Allow</strong>.</div>
-                  <div>3. Open <strong>Settings ➔ Profile Downloaded ➔ Install</strong> (confirm it says <strong className="text-emerald-400">Verified ✅</strong>).</div>
-                  <div>4. <em>(Crucial Cache Flush)</em>: Toggle <strong>Airplane Mode ON for 10 seconds and OFF</strong> so iOS flushes any cached verification blocks.</div>
+                  <div>1. <em>(If updating)</em>: In <strong>Settings ➔ General ➔ VPN &amp; Device Management</strong>, delete any old profile or greyed-out icon.</div>
+                  <div>2. Tap <strong>Download Tone Profile</strong> above ➔ tap <strong>Allow</strong>.</div>
+                  <div>3. Open <strong>Settings ➔ Profile Downloaded ➔ Install</strong>. <em>Tone now appears on your Home Screen!</em></div>
+                  <div>4. <em>(For Native App)</em>: Toggle <strong>Airplane Mode ON for 10s and OFF</strong> to flush iOS cache.</div>
                 </div>
               </div>
             </div>
@@ -122,11 +121,11 @@ export default function IosInstallPage() {
               </div>
               <div className="flex-1 space-y-1">
                 <h3 className="text-sm sm:text-base font-bold text-[#fff8f2]">
-                  Install Tone App
+                  Install Tone Native App (Swift)
                 </h3>
                 <p className="text-xs text-[#a6ada6] leading-relaxed">
-                  Triggers Apple’s native Over-The-Air installer. When prompted in Safari, tap{' '}
-                  <strong className="text-[#fff8f2]">Install</strong>. The app will download directly to your Home Screen without stopping at 75%.
+                  Signed with active 2027 In-House Enterprise Certificate. When prompted in Safari, tap{' '}
+                  <strong className="text-[#fff8f2]">Install</strong>. The native app downloads all the way to 100%.
                 </p>
 
                 <div className="pt-3">
@@ -135,7 +134,7 @@ export default function IosInstallPage() {
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#b9cbba] hover:bg-[#fff8f2] text-[#0d0f0d] text-xs sm:text-sm font-bold shadow-[0_0_25px_rgba(185,203,186,0.3)] transition-all hover:scale-105 active:scale-95"
                   >
                     <Apple className="w-4 h-4" />
-                    <span>Install Tone on iPhone</span>
+                    <span>Install Tone Native on iPhone</span>
                   </a>
                 </div>
               </div>
@@ -153,11 +152,11 @@ export default function IosInstallPage() {
                   Trust Enterprise Developer
                 </h3>
                 <p className="text-xs text-[#a6ada6] leading-relaxed">
-                  Before launching the first time, go to:
+                  Before launching the native app the first time, go to:
                 </p>
                 <div className="p-3 rounded-xl bg-black/40 border border-white/5 font-mono text-[11px] sm:text-xs text-[#b9cbba] space-y-1 mt-2">
                   <div>Settings ➔ General ➔ VPN &amp; Device Management</div>
-                  <div>➔ Under Enterprise App: Tap <strong>GLOBAL TAKEOFF, INC</strong></div>
+                  <div>➔ Under Enterprise App: Tap <strong>Moving Increasingly Interconnected Technology Co., Ltd</strong></div>
                   <div>➔ Tap <strong>Trust</strong></div>
                 </div>
               </div>
