@@ -7,19 +7,18 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
-  Smartphone,
   ArrowRight,
   Send,
   Music2,
-  Apple,
 } from 'lucide-react';
+import { AppleLogo } from '@/components/common/AppleLogo';
 import { useAuth } from '@/context/AuthContext';
 import { ScrollWaveVisualizer } from './landing/ScrollWaveVisualizer';
 import { InteractiveVinylDeck } from './landing/InteractiveVinylDeck';
 import { KineticAudioMarquee } from './landing/KineticAudioMarquee';
 import { AudioArchitectureScroller } from './landing/AudioArchitectureScroller';
 import { AudiophileBentoGrid } from './landing/AudiophileBentoGrid';
-import { AndroidShowcaseSection } from './landing/AndroidShowcaseSection';
+import { ToneIOSShowcaseSection } from './landing/ToneIOSShowcaseSection';
 import { SmoothScrollProvider } from '../providers/SmoothScrollProvider';
 
 if (typeof window !== 'undefined') {
@@ -32,10 +31,6 @@ export function PublicProductLanding() {
   const heroRef = useRef<HTMLElement>(null);
   const preFooterRef = useRef<HTMLElement>(null);
   const footerRef = useRef<HTMLElement>(null);
-
-  const downloadUrl =
-    process.env.NEXT_PUBLIC_APK_DOWNLOAD_URL ||
-    'https://musicly-4l0y.onrender.com/download/musicly.apk';
 
   useGSAP(
     () => {
@@ -197,7 +192,7 @@ export function PublicProductLanding() {
 
             {/* Simple Subtext */}
             <p className="hero-subtext text-base sm:text-lg md:text-xl text-[#a6ada6] max-w-2xl mt-6 leading-relaxed">
-              Lossless Telegram cloud storage. Studio sound quality. Native apps for iOS & Android.
+              Lossless Telegram cloud storage. Studio sound quality. Native app for iOS.
             </p>
 
             {/* Call to Action Buttons */}
@@ -226,18 +221,9 @@ export function PublicProductLanding() {
                 href="/ios"
                 className="hero-cta-btn flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-[#fff8f2] font-semibold text-xs sm:text-sm transition-all hover:scale-105 active:scale-95 shadow-md"
               >
-                <Apple className="w-4 h-4 text-[#fff8f2]" />
+                <AppleLogo className="w-4 h-4 text-[#fff8f2]" />
                 <span>Install for iOS</span>
               </Link>
-
-              <a
-                href={downloadUrl}
-                download="tone.apk"
-                className="hero-cta-btn flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#1c211d] hover:bg-[#283029] border border-white/10 text-[#a6ada6] hover:text-[#fff8f2] font-semibold text-xs sm:text-sm transition-all hover:scale-105 active:scale-95 shadow-md"
-              >
-                <Smartphone className="w-4 h-4 text-[#b9cbba]" />
-                <span>Get APK</span>
-              </a>
             </div>
 
             {/* 3D Interactive Vinyl Turntable Mapped to Scroll */}
@@ -256,8 +242,8 @@ export function PublicProductLanding() {
         {/* 4. ASYMMETRIC BENTO GRID */}
         <AudiophileBentoGrid />
 
-        {/* 5. NATIVE ANDROID SHOWCASE SECTION */}
-        <AndroidShowcaseSection />
+        {/* 5. NATIVE IPHONE SHOWCASE SECTION */}
+        <ToneIOSShowcaseSection />
 
         {/* 6. CONVERSION PRE-FOOTER WITH DELAYED APPEARING ANIMATIONS */}
         <section
@@ -325,17 +311,9 @@ export function PublicProductLanding() {
                 href="/ios"
                 className="hover:text-[#fff8f2] text-[#b9cbba] transition-colors flex items-center gap-1.5"
               >
-                <Apple className="w-3.5 h-3.5 text-[#fff8f2]" />
+                <AppleLogo className="w-3.5 h-3.5 text-[#fff8f2]" />
                 <span>iOS App</span>
               </Link>
-              <a
-                href={downloadUrl}
-                download="tone.apk"
-                className="hover:text-[#b9cbba] transition-colors flex items-center gap-1.5"
-              >
-                <Smartphone className="w-3.5 h-3.5" />
-                <span>Android APK</span>
-              </a>
               <a
                 href="https://t.me/tone_sync_bot"
                 target="_blank"

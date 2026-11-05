@@ -11,12 +11,12 @@ import {
   Heart,
   Plus,
   Send,
-  Smartphone,
   Music2,
   Disc3,
   Mic2,
   Radio,
 } from 'lucide-react';
+import { AppleLogo } from '@/components/common/AppleLogo';
 import { useSync } from '@/context/SyncContext';
 import { usePlayer } from '@/context/PlayerContext';
 import { getCoverImageUrl } from '@/lib/utils';
@@ -266,7 +266,7 @@ export function Sidebar() {
           </div>
         </div>
 
-        {/* Bottom Utility Segment: Telegram Bot Cloud & Android App Download */}
+        {/* Bottom Utility Segment: Telegram Bot Cloud & iOS App Download */}
         <div className="rounded-2xl bg-[#111412]/90 backdrop-blur-xl border border-white/[0.07] p-2.5 shadow-xl space-y-1.5">
           {/* Telegram Sync Pill */}
           <button
@@ -292,21 +292,21 @@ export function Sidebar() {
             />
           </button>
 
-          {/* Android Mobile App Pill */}
+          {/* iOS App Pill */}
           <Link
-            href="/#download-android"
+            href="/ios"
             className="w-full flex items-center justify-between p-2 rounded-xl bg-[#1c211d]/70 hover:bg-[#1c211d] border border-white/[0.05] hover:border-[#b9cbba]/30 transition-colors group"
           >
             <div className="flex items-center gap-2 min-w-0">
-              <Smartphone className="w-3.5 h-3.5 text-[#b9cbba] flex-shrink-0" />
+              <AppleLogo className="w-3.5 h-3.5 text-[#b9cbba] flex-shrink-0" />
               <div className="min-w-0">
-                <p className="text-[11px] font-bold text-[#fff8f2] truncate">Tone Android</p>
-                <p className="text-[9px] text-[#a6ada6] truncate">Offline cache & widget</p>
+                <p className="text-[11px] font-bold text-[#fff8f2] truncate">Tone for iOS</p>
+                <p className="text-[9px] text-[#a6ada6] truncate">Lossless audio & air-sync</p>
               </div>
             </div>
 
             <span className="text-[9px] font-mono font-bold text-[#b9cbba] px-1.5 py-0.5 rounded bg-[#3b4b3e]/40 border border-[#b9cbba]/20">
-              APK
+              iOS
             </span>
           </Link>
         </div>

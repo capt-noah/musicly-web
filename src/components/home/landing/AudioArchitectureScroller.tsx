@@ -7,11 +7,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Send,
   Sliders,
-  Smartphone,
   CheckCircle2,
   Radio,
   Disc3,
 } from 'lucide-react';
+import { AppleLogo } from '@/components/common/AppleLogo';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -44,9 +44,9 @@ const STAGES = [
     step: '03',
     tab: 'Everywhere',
     title: 'Listen on Any Device',
-    desc: 'Enjoy seamless playback wherever you are. Stream directly in your browser or install the Android app to save songs offline and keep listening anywhere without internet.',
+    desc: 'Enjoy seamless playback wherever you are. Stream directly in your browser or install the iOS app to save songs offline and keep listening anywhere without internet.',
     stats: [
-      { label: 'Android App', val: 'Offline Caching' },
+      { label: 'iOS App', val: 'Offline Caching' },
       { label: 'Web Player', val: 'Instant Access' },
       { label: 'Cross-Device', val: 'Synced Queue' },
     ],
@@ -350,8 +350,8 @@ export function AudioArchitectureScroller() {
                   <div className="grid grid-cols-2 gap-3">
                     <div className="p-4 rounded-2xl bg-[#1a201b] border border-[#b9cbba]/30 space-y-2">
                       <div className="flex items-center gap-2">
-                        <Smartphone className="w-4 h-4 text-[#b9cbba]" />
-                        <span className="text-xs font-bold text-[#fff8f2]">Android App</span>
+                        <AppleLogo className="w-4 h-4 text-[#b9cbba]" />
+                        <span className="text-xs font-bold text-[#fff8f2]">iOS App</span>
                       </div>
                       <p className="text-[11px] text-[#a6ada6]">
                         Save songs offline for zero-data listening anywhere.

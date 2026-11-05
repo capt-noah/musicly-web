@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Apple, ArrowLeft, Download, ChevronRight } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowLeft, Download } from 'lucide-react';
 
 export default function IosInstallPage() {
   const manifestUrl = 'https://musicly-4l0y.onrender.com/ios/manifest.plist';
@@ -12,23 +13,39 @@ export default function IosInstallPage() {
     <main className="min-h-screen bg-[#0d0f0d] text-[#fff8f2] flex flex-col items-center justify-center p-4 sm:p-6 relative selection:bg-[#b9cbba] selection:text-[#0d0f0d]">
       <div className="w-full max-w-sm relative z-10 py-10">
         
-        {/* Top Back Navigation */}
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-xs font-medium text-[#a6ada6] hover:text-[#fff8f2] transition-colors mb-8 group"
-        >
-          <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" />
-          <span>Back to Tone</span>
-        </Link>
+        {/* Top Back Navigation Pill */}
+        <div className="mb-8">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 backdrop-blur-md text-xs font-medium text-[#a6ada6] hover:text-[#fff8f2] transition-all hover:scale-105 active:scale-95 group shadow-sm"
+          >
+            <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5 text-[#b9cbba]" />
+            <span>Back to Tone</span>
+          </Link>
+        </div>
 
-        {/* Minimal Hero */}
+        {/* Minimal Hero with Tone Icon & Version */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-[#141815] border border-white/10 shadow-lg flex items-center justify-center">
-            <Apple className="w-8 h-8 text-[#b9cbba]" />
+          <div className="relative w-20 h-20 mx-auto mb-4 rounded-3xl p-1 bg-gradient-to-b from-white/20 to-white/5 border border-white/15 shadow-[0_16px_40px_rgba(0,0,0,0.65)] flex items-center justify-center">
+            <div className="relative w-full h-full rounded-[22px] overflow-hidden bg-[#141815]">
+              <Image
+                src="/images/icon.png"
+                alt="Tone Icon"
+                fill
+                className="object-cover"
+                priority
+                unoptimized
+              />
+            </div>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#fff8f2] mb-1.5">
-            Install Tone
+
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#fff8f2] mb-1.5 flex items-center justify-center gap-2.5">
+            <span>Install Tone</span>
+            <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-white/10 text-[#b9cbba] border border-white/10 tracking-wide">
+              v1.1.0
+            </span>
           </h1>
+
           <p className="text-xs sm:text-sm text-[#a6ada6]">
             Follow two quick steps to install Tone on your iPhone.
           </p>
@@ -79,9 +96,17 @@ export default function IosInstallPage() {
 
             <a
               href={itmsUrl}
-              className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-[#b9cbba] hover:bg-[#fff8f2] text-[#0d0f0d] text-xs sm:text-sm font-bold transition-all shadow-md active:scale-[0.99]"
+              className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-[#b9cbba] hover:bg-[#fff8f2] text-[#0d0f0d] text-xs sm:text-sm font-bold transition-all shadow-md active:scale-[0.99] group"
             >
-              <Apple className="w-4 h-4" />
+              <div className="relative w-4 h-4 rounded-md overflow-hidden bg-[#0d0f0d] shrink-0">
+                <Image
+                  src="/images/icon.png"
+                  alt="Tone"
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
+              </div>
               <span>2. Install Tone</span>
             </a>
           </div>
@@ -92,29 +117,6 @@ export default function IosInstallPage() {
             <p>Go to <strong>Settings ➔ General ➔ VPN &amp; Device Management</strong>, tap <strong>Beihang University</strong>, and tap <strong>Trust</strong>.</p>
           </div>
 
-        </div>
-
-        {/* Quiet raw download / back link */}
-        <div className="text-center space-y-3">
-          <div>
-            <a
-              href="https://musicly-4l0y.onrender.com/ios/Tone-Enterprise.ipa"
-              download="Tone.ipa"
-              className="text-[11px] text-[#a6ada6]/60 hover:text-[#b9cbba] transition-colors underline underline-offset-4"
-            >
-              Download .ipa file directly
-            </a>
-          </div>
-
-          <div>
-            <Link
-              href="/"
-              className="text-xs text-[#b9cbba] hover:underline inline-flex items-center gap-1"
-            >
-              <span>Return to Tone Web</span>
-              <ChevronRight className="w-3 h-3" />
-            </Link>
-          </div>
         </div>
 
       </div>

@@ -10,13 +10,12 @@ import {
   User,
   Sparkles,
   LogOut,
-  Smartphone,
-  Apple,
   HardDrive,
   PictureInPicture2,
   Home,
   Radio,
 } from 'lucide-react';
+import { AppleLogo } from '@/components/common/AppleLogo';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { useSync } from '@/context/SyncContext';
@@ -38,9 +37,6 @@ export function TopHeader() {
   const [wrapModalOpen, setWrapModalOpen] = useState(false);
   const [storageModalOpen, setStorageModalOpen] = useState(false);
   const [toneMatchModalOpen, setToneMatchModalOpen] = useState(false);
-  const downloadUrl =
-    process.env.NEXT_PUBLIC_APK_DOWNLOAD_URL ||
-    'https://musicly-4l0y.onrender.com/download/musicly.apk';
 
   // If not mounted yet on client: render clean neutral dock matching SSR without flashing unauthenticated CTA boxes
   if (!isMounted) {
@@ -99,19 +95,11 @@ export function TopHeader() {
 
           {/* Right Actions */}
           <div className="flex items-center gap-2.5">
-            <a
-              href={downloadUrl}
-              download="tone.apk"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 backdrop-blur-md text-xs font-semibold text-[#fff8f2] transition-all hover:scale-105"
-            >
-              <Smartphone className="w-3.5 h-3.5 text-[#b9cbba]" />
-              <span>APK</span>
-            </a>
             <Link
               href="/ios"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 backdrop-blur-md text-xs font-semibold text-[#fff8f2] transition-all hover:scale-105"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 backdrop-blur-md text-xs font-semibold text-[#fff8f2] transition-all hover:scale-105 active:scale-95 shadow-sm"
             >
-              <Apple className="w-3.5 h-3.5 text-[#fff8f2]" />
+              <AppleLogo className="w-3.5 h-3.5 text-[#fff8f2]" />
               <span>iOS</span>
             </Link>
             <Link
@@ -187,7 +175,7 @@ export function TopHeader() {
           </button>
         </div>
 
-        {/* Right Section: Android CTA + Sync Pill + Sync Button + User Profile Capsule */}
+        {/* Right Section: iOS CTA + Sync Pill + Sync Button + User Profile Capsule */}
         <div className="flex items-center gap-2.5">
           {/* Desktop-specific Quick Actions: Storage Manager & Floating Widget Toggle */}
           {isDesktop && (
@@ -213,24 +201,16 @@ export function TopHeader() {
             </>
           )}
 
-          {/* Mobile App Links */}
+          {/* iOS App Link */}
           {!isDesktop && (
-            <div className="hidden lg:flex items-center gap-2">
+            <div className="hidden lg:flex items-center">
               <Link
                 href="/ios"
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.08] hover:bg-white/[0.14] border border-white/15 backdrop-blur-md text-xs font-semibold text-[#fff8f2] transition-colors"
               >
-                <Apple className="w-3.5 h-3.5 text-[#fff8f2]" />
+                <AppleLogo className="w-3.5 h-3.5 text-[#fff8f2]" />
                 <span>iOS</span>
               </Link>
-              <a
-                href={downloadUrl}
-                download="tone.apk"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.08] hover:bg-white/[0.14] border border-white/15 backdrop-blur-md text-xs font-semibold text-[#fff8f2] transition-colors"
-              >
-                <Smartphone className="w-3.5 h-3.5 text-[#b9cbba]" />
-                <span>APK</span>
-              </a>
             </div>
           )}
 
