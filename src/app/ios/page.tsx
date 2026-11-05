@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Download } from 'lucide-react';
+import { ArrowLeft, Download, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 export default function IosInstallPage() {
   const manifestUrl = 'https://musicly-web.vercel.app/ios/manifest.plist';
@@ -47,43 +47,18 @@ export default function IosInstallPage() {
           </h1>
 
           <p className="text-xs sm:text-sm text-[#a6ada6]">
-            Follow two quick steps to install Tone on your iPhone.
+            Follow three quick steps to install and protect Tone on your iPhone.
           </p>
         </div>
 
-        {/* Two Simple Steps */}
+        {/* 3 Step Sequence */}
         <div className="space-y-4 mb-6">
           
-          {/* STEP 1 */}
-          <div className="rounded-2xl bg-[#121613] border border-white/10 p-5 space-y-3">
-            <div className="flex items-center gap-3">
-              <span className="w-6 h-6 rounded-full bg-[#b9cbba] text-[#0d0f0d] text-xs font-bold flex items-center justify-center shrink-0">
-                1
-              </span>
-              <h2 className="text-sm font-semibold text-[#fff8f2]">
-                Download Profile
-              </h2>
-            </div>
-            
-            <p className="text-xs text-[#a6ada6] leading-relaxed">
-              Tap below, tap <strong>Allow</strong>, then go to <strong>Settings ➔ Profile Downloaded ➔ Install</strong>.
-            </p>
-
-            <a
-              href="/ios/antirevoke.mobileconfig"
-              download="Tone.mobileconfig"
-              className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-[#fff8f2] transition-colors"
-            >
-              <Download className="w-4 h-4 text-[#b9cbba]" />
-              <span>1. Download Profile</span>
-            </a>
-          </div>
-
-          {/* STEP 2 */}
+          {/* STEP 1: INSTALL APP */}
           <div className="rounded-2xl bg-[#121613] border border-[#b9cbba]/30 p-5 space-y-3">
             <div className="flex items-center gap-3">
               <span className="w-6 h-6 rounded-full bg-[#b9cbba] text-[#0d0f0d] text-xs font-bold flex items-center justify-center shrink-0">
-                2
+                1
               </span>
               <h2 className="text-sm font-semibold text-[#fff8f2]">
                 Install App
@@ -91,7 +66,7 @@ export default function IosInstallPage() {
             </div>
 
             <p className="text-xs text-[#a6ada6] leading-relaxed">
-              Tap below, then tap <strong>Install</strong>. Tone will start downloading to your home screen.
+              Tap below, then tap <strong>Install</strong> on the iOS prompt. Tone will download to your home screen.
             </p>
 
             <a
@@ -107,14 +82,69 @@ export default function IosInstallPage() {
                   unoptimized
                 />
               </div>
-              <span>2. Install Tone</span>
+              <span>Install Tone</span>
             </a>
           </div>
 
-          {/* Opening Note */}
-          <div className="rounded-xl bg-black/40 border border-white/5 p-4 text-[11px] sm:text-xs text-[#a6ada6] leading-relaxed space-y-1">
-            <p className="font-semibold text-[#fff8f2]">Before opening Tone:</p>
-            <p>Go to <strong>Settings ➔ General ➔ VPN &amp; Device Management</strong>, tap <strong>Beihang University</strong>, and tap <strong>Trust</strong>.</p>
+          {/* STEP 2: TRUST DEVELOPER */}
+          <div className="rounded-2xl bg-[#121613] border border-white/10 p-5 space-y-3">
+            <div className="flex items-center gap-3">
+              <span className="w-6 h-6 rounded-full bg-[#b9cbba] text-[#0d0f0d] text-xs font-bold flex items-center justify-center shrink-0">
+                2
+              </span>
+              <h2 className="text-sm font-semibold text-[#fff8f2]">
+                Trust Developer
+              </h2>
+            </div>
+            
+            <p className="text-xs text-[#a6ada6] leading-relaxed">
+              Open iPhone <strong>Settings ➔ General ➔ VPN &amp; Device Management</strong>.
+            </p>
+
+            <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-1 text-xs text-[#a6ada6]">
+              <div className="flex items-center gap-1.5 text-[#fff8f2] font-semibold">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#b9cbba]" />
+                <span>Tap &quot;Beihang University&quot; ➔ Tap &quot;Trust&quot;</span>
+              </div>
+              <p className="text-[11px] text-[#7d857e]">
+                This performs the standard one-time developer handshake with Apple.
+              </p>
+            </div>
+          </div>
+
+          {/* STEP 3: ANTI-REVOKE PROFILE */}
+          <div className="rounded-2xl bg-[#121613] border border-white/10 p-5 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="w-6 h-6 rounded-full bg-[#b9cbba] text-[#0d0f0d] text-xs font-bold flex items-center justify-center shrink-0">
+                  3
+                </span>
+                <h2 className="text-sm font-semibold text-[#fff8f2]">
+                  Anti-Revoke Profile
+                </h2>
+              </div>
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#b9cbba]/10 text-[#b9cbba] text-[10px] font-medium border border-[#b9cbba]/20">
+                <ShieldCheck className="w-3 h-3" />
+                <span>Signed</span>
+              </span>
+            </div>
+            
+            <p className="text-xs text-[#a6ada6] leading-relaxed">
+              Tap below, tap <strong>Allow</strong>, then go to <strong>Settings ➔ Profile Downloaded ➔ Install</strong> to permanently protect Tone against certificate revocations.
+            </p>
+
+            <a
+              href="/ios/antirevoke.mobileconfig"
+              download="Tone.mobileconfig"
+              className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-[#fff8f2] transition-colors"
+            >
+              <Download className="w-4 h-4 text-[#b9cbba]" />
+              <span>Download Signed Profile</span>
+            </a>
+
+            <p className="text-[11px] text-[#7d857e] text-center">
+              Signed by iPhone Distribution: Beihang University
+            </p>
           </div>
 
         </div>
