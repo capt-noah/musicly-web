@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { ArrowLeft, Download } from 'lucide-react';
 
 export default function IosInstallPage() {
-  const manifestUrl = 'https://musicly-4l0y.onrender.com/ios/manifest.plist';
+  const manifestUrl = 'https://musicly-web.vercel.app/ios/manifest.plist';
   const itmsUrl = `itms-services://?action=download-manifest&url=${encodeURIComponent(manifestUrl)}`;
 
   return (
