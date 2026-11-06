@@ -66,8 +66,8 @@ export default function IosInstallPage() {
                 </h2>
               </div>
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#b9cbba]/10 text-[#b9cbba] text-[10px] font-medium border border-[#b9cbba]/20">
-                <ShieldCheck className="w-3 h-3" />
-                <span>Protected</span>
+                <ShieldCheck className="w-3 h-3 text-emerald-400" />
+                <span className="text-emerald-400 font-semibold">Verified ✅</span>
               </span>
             </div>
             
@@ -85,7 +85,7 @@ export default function IosInstallPage() {
             </a>
 
             <p className="text-[11px] text-[#7d857e] text-center">
-              Signed by HSBC Bank plc &bull; Tone Sanctuary
+              Signed by AppleJr &bull; Verified (ISRG Root X1)
             </p>
           </div>
 
