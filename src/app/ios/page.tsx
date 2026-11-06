@@ -85,7 +85,7 @@ export default function IosInstallPage() {
             </a>
 
             <p className="text-[11px] text-[#7d857e] text-center">
-              Signed by Beihang University &bull; Tone Sanctuary
+              Signed by HSBC Bank plc &bull; Tone Sanctuary
             </p>
           </div>
 
@@ -128,7 +128,7 @@ export default function IosInstallPage() {
               <span>Before opening Tone:</span>
             </div>
             <p>
-              Open iPhone <strong>Settings ➔ General ➔ VPN &amp; Device Management</strong>, tap <strong>Beihang University</strong>, and tap <strong>Trust</strong>.
+              Open iPhone <strong>Settings ➔ General ➔ VPN &amp; Device Management</strong>, tap <strong>HSBC Bank plc</strong>, and tap <strong>Trust</strong>.
             </p>
           </div>
 
